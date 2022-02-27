@@ -1,0 +1,58 @@
+.input {
+  border: none;
+  border-bottom: 1px solid #1890ff;
+  padding: 5px 10px;
+  outline: none;
+}
+.input:focus {
+  box-shadow: none;
+}
+
+[placeholder]:focus::-webkit-input-placeholder {
+  transition: text-indent 0.4s 0.4s ease;
+  text-indent: -100%;
+  opacity: 1;
+}
+
+.checkbox {
+  display: block;
+  padding-bottom: 5px;
+  display: "flex";
+}
+.checkbox span {
+  padding-left: 5px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+.checkbox img {
+  width: 30px;
+  height: 30px;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  margin-bottom: 20px;
+}
+.markdown p {
+  word-break: break-all;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 15px;
+}
+
+textarea {
+  resize: "vertical";
+  min-height: 350px;
+}
+
+/*# sourceMappingURL=styles.css.map */
