@@ -8,6 +8,7 @@ import social from "../utils/social"
 import misc from "../utils/Misc"
 import { sortObj } from "../utils/utils"
 import rehypeRaw from "rehype-raw"
+import CopyToClipboard from "react-copy-to-clipboard"
 
 function Form(){
     document.title = "Github readme profile generator"
@@ -36,8 +37,11 @@ function Form(){
     })
 
     const [addon,setAddon] = useState([])
-    
+    const [error,setError] = useState(false)
+    const [copy,setCopy] = useState(false)
+
     function handle(e){
+        setError(false)
         setState({...state,[e.target.name]: e.target.value})
     }
     
@@ -137,6 +141,8 @@ ${
         e.preventDefault()
         if(state.name){
             genrateMarkdown()
+        }else{
+            setError(true)
         }
     }
 
@@ -219,16 +225,16 @@ ${
                         {
                             Object.keys(sortObj(tech)).map(key => (
                                 <div className="pure-u-1-3 pure-u-md-1-5" key={key}>
-                                    <label className="checkbox" title={key}>
+                                    <label className="checkbox">
                                         <input
                                         name={key}
                                         type={"checkbox"}
                                         onChange={handleCheck}
                                         defaultChecked={stack.includes(key)}
+                                        data-tooltip={key}
                                         />
-                                        <span style={{paddingBottom: "10px"}}>
+                                        <span style={{paddingBottom: "30px"}}>
                                             <img src={tech[key][1]}/>
-                                            <span style={{paddingLeft: "15px"}}>{key}</span>
                                         </span>
                                     </label>
                                 </div>
@@ -317,20 +323,40 @@ ${
                     }
                 </TabPanel>
             </Tabs>
-
+            <br/>
+            <br/>
+            <br/>
+        {
+                !state.name && error?
+                <p style={{color: "#e53935"}}>
+                    Name is required
+                </p>
+                :
+            <span/>
+        }
         <button type="submit" style={{marginTop: "25px",marginBottom: "25px"}}>Generate readme</button>
         {
             markdown?
-            <>
+            <main>
                 <h2>Preview</h2>
                 <hr/>
+                <CopyToClipboard text={markdown}>
+                    <button data-tooltip="copy markdown" onClick={function(){setCopy(true)}} >Copy</button>
+                </CopyToClipboard>
+                    {
+                        copy?
+                        <p>Copied</p>
+                        :
+                        <span/>
+                    }
+
                 <Tabs>
                     <TabList>
                         <Tab>
                             Preview
                         </Tab>
                         <Tab>
-                            Raw
+                            Markdown
                         </Tab>
                     </TabList>
                     <TabPanel>
@@ -348,10 +374,11 @@ ${
                         />
                     </TabPanel>
                 </Tabs>
-            </>
+            </main>
             :
             <span/>
         }
+        
     </form>
         
     )
