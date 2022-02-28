@@ -34,6 +34,7 @@ function Form(){
     const [project,setProject] = useState({
         "project1": ["project name","link_to_project"],
         "project2": ["project name","link_to_project"],
+        "project3": ["",""]
     })
 
     const [addon,setAddon] = useState([])
@@ -115,10 +116,18 @@ ${
 `:""}
 
 `          
-
+    var haveProject = false
     md += `\n  `
-    md += `\n### My project  \n`
-    for(const [key,value] of Object.entries(project)){
+    for(const key in project){
+        if(project[key][0] &&  project[key][1]){            
+            haveProject = true
+        }
+    }
+    if(haveProject){
+        md += `\n### My project  \n`
+    }
+
+    for(const key in project){
         if(project[key][0] && project[key][1]){
             md += ` - [${project[key][0]}](${project[key][1]}) \n`
         }
@@ -245,26 +254,33 @@ ${
                 <TabPanel>
                     <h3>Project</h3>
                     <hr/>
-                    {
-                        Object.keys(project).map(key => (
-                            <div className="grid">
-                                <input
-                                id={key}
-                                name="projectName"
-                                className="input"
-                                value={project[key][0]}
-                                onChange={handleProject}
-                                />
-                                <input
-                                id={key}
-                                name="projectLink"
-                                className="input"
-                                value={project[key][1]}
-                                onChange={handleProject}
-                                />
-                            </div>
-                        ))
-                    }
+                    <div className="pure-g">
+                        {
+                            Object.keys(project).map(key => (
+                                <div className="pure-u-1" style={{display: "flex"}}>
+                                    <span>{key} </span>
+                                    <input
+                                    id={key}
+                                    name="projectName"
+                                    className="input"
+                                    value={project[key][0]}
+                                    onChange={handleProject}
+                                    placeholder="project name"
+                                    style={{marginLeft: "15px",marginRight: "15px"}}
+                                    />
+                                    <input
+                                    id={key}
+                                    name="projectLink"
+                                    className="input"
+                                    value={project[key][1]}
+                                    onChange={handleProject}
+                                    placeholder="project link"
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+
                 </TabPanel>
                 <TabPanel>
                     <h3>Social</h3>
