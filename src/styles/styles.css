@@ -55,4 +55,13 @@ textarea {
   min-height: 350px;
 }
 
+main button {
+  font-size: 1em;
+  padding: 0.25em;
+  border-radius: 3px;
+  width: 4rem;
+  display: inline;
+  margin-left: 15px;
+}
+
 /*# sourceMappingURL=styles.css.map */
