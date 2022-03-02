@@ -1,14 +1,11 @@
-import { useState } from "react"
-import { ReactMarkdown } from "react-markdown/lib/react-markdown"
-import remarkGfm from "remark-gfm"
+import { useState,useEffect } from "react"
 import {Tab,Tabs,TabList,TabPanel} from "react-tabs"
 import "react-tabs/style/react-tabs.css"
 import tech from "../utils/tech"
 import social from "../utils/social"
 import misc from "../utils/Misc"
-import { sortObj } from "../utils/utils"
-import rehypeRaw from "rehype-raw"
-import CopyToClipboard from "react-copy-to-clipboard"
+import { sortObj,genrateMarkdown } from "../utils/utils"
+import Result from "./Result"
 
 function Form(){
     document.title = "Github readme profile generator"
@@ -39,7 +36,6 @@ function Form(){
 
     const [addon,setAddon] = useState([])
     const [error,setError] = useState(false)
-    const [copy,setCopy] = useState(false)
 
     function handle(e){
         setError(false)
@@ -84,77 +80,15 @@ function Form(){
     }
 
 
-    function genrateMarkdown(){
-        var md = 
-`
-## ${state.greet} ${state.name}
-${state.subtitle?`##### ${state.subtitle}`:""}
-${state.bio?`### About me \n --- \n ${state.bio}`:""}
-
-${stack.length > 0?
-`
- ${state.tech?`### ${state.tech}`:"### Technology i use"}\n
----
-${
-    stack.map(function(data){
-        console.log(data)
-        if(data.length > 0){            
-                return `<a href="${tech[data][0]}" title="${data}"><img src="${tech[data][1]}" style="height: 50px;width: 50px;"/> </a>`
-        }
-    }).join(" ")
-}
-
-### My stat
----
-${
-    addon.map(function(data){
-        console.log(data)
-        return `![${data}](${misc[data]}${socialName.github})\n\n`
-
-    }).join(" ")
-}
-`:""}
-
-`          
-    var haveProject = false
-    md += `\n  `
-    for(const key in project){
-        if(project[key][0] &&  project[key][1]){            
-            haveProject = true
-        }
-    }
-    if(haveProject){
-        md += `\n### My project  \n`
-    }
-
-    for(const key in project){
-        if(project[key][0] && project[key][1]){
-            md += ` - [${project[key][0]}](${project[key][1]}) \n`
-        }
-    }
-    md += `\n`
-    
-    if (Object.values(socialName).filter(el => el === "").length < Object.keys(social).length) {
-        md += `### ${state.social}\n---\n`
-    }
-    for(const key in social){
-        if(socialName[key]){
-            md += `<a href=${social[key][0] + socialName[key]} title="${socialName[key]} ${key}"><img height="50" width="50" src="${social[key][1]}" style="margin-left: 5px"/><a/> `
-
-        }
-    }
-    setMarkdown(md.trim())
-}
-
     function submit(e){
         e.preventDefault()
         if(state.name){
-            genrateMarkdown()
+            setMarkdown(genrateMarkdown(state,stack,addon,socialName,project))
+            console.log(markdown);
         }else{
             setError(true)
         }
     }
-
     return (
         <form onSubmit={submit}>
             <Tabs>
@@ -353,44 +287,7 @@ ${
         <button type="submit" style={{marginTop: "25px",marginBottom: "25px"}}>Generate readme</button>
         {
             markdown?
-            <main>
-                <h2>Preview</h2>
-                <hr/>
-                <CopyToClipboard text={markdown}>
-                    <button data-tooltip="copy markdown" onClick={function(){setCopy(true)}} >Copy</button>
-                </CopyToClipboard>
-                    {
-                        copy?
-                        <p>Copied</p>
-                        :
-                        <span/>
-                    }
-
-                <Tabs>
-                    <TabList>
-                        <Tab>
-                            Preview
-                        </Tab>
-                        <Tab>
-                            Markdown
-                        </Tab>
-                    </TabList>
-                    <TabPanel>
-                        <ReactMarkdown 
-                        className="markdown"
-                        children={markdown} 
-                        remarkPlugins={[remarkGfm]} 
-                        rehypePlugins={[rehypeRaw]}
-                        />
-                    </TabPanel>
-                    <TabPanel>
-                        <textarea
-                        value={markdown}
-                        onChange={function(e){setMarkdown(e.target.value)}}
-                        />
-                    </TabPanel>
-                </Tabs>
-            </main>
+            <Result markdown={markdown}/>
             :
             <span/>
         }
