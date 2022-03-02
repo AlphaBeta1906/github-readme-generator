@@ -24,7 +24,12 @@ const tech = {
     flask: ["https://flask.palletsprojects.com/en/2.0.x/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg"],
     go: ["https://go.dev/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"],
     haskell: ["https://www.haskell.org/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/haskell/haskell-original.svg"],
-    nodejs: ["https://nodejs.org/en/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"]
+    nodejs: ["https://nodejs.org/en/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"],
+    bootstrap: ["https://getbootstrap.com/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"],
+    bulma: ["https://bulma.io/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bulma/bulma-plain.svg"],
+    react: ["https://reactjs.org/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"],
+    angularjs: ["https://angularjs.org/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"],
+    flutter: ["https://flutter.dev/", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"]
 }
 
 export default tech
