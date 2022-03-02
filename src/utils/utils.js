@@ -26,13 +26,15 @@ ${
 stack.map(function(data){
     console.log(data)
     if(data.length > 0){            
-            return `<a href="${tech[data][0]}" title="${data}"><img src="${tech[data][1]}" style="height: 50px;width: 50px;"/> </a>`
+        return `<a href="${tech[data][0]}" title="${data}"><img src="${tech[data][1]}" style="height: 50px;width: 50px;"/> </a>`
     }
 }).join(" ")
 }
 
-### My stat
----
+`:""}
+
+${addon.length > 0?"### My stat\n---\n":""}
+
 ${
 addon.map(function(data){
     console.log(data)
@@ -40,7 +42,6 @@ addon.map(function(data){
 
 }).join(" ")
 }
-`:""}
 
 `          
     var haveProject = false
